@@ -73,36 +73,35 @@ tar zxvf env.tar.gz /usr/local/Dshield/
 ** 监控端口 **
 mont_port = "80,22"
 
-###监听模式
-# false 表示主动防御
-# true  表示只作记录不会锁IP,ttl
-mont_listen = false
+** 监听模式 **
+false 表示主动防御
+true  表示只作记录不会锁IP,ttl
+> mont_listen = false
 
-###监控密度,单位为秒
-rexec_time = 5
+** 监控密度,单位为秒 **
+> rexec_time = 5
 
-###锁定连接数,该项能确定监控的敏感度
-# 建议：100
-no_of_connections = 100
+** 锁定连接数,该项能确定监控的敏感度 **
+建议：100
+> no_of_connections = 100
 
-###ip封锁时间
-#支持1d/1h/1m格式
-block_period_ip = "1m"
+** ip封锁时间 **
+支持1d/1h/1m格式
+> block_period_ip = "1m"
 
-[ttl]
-###监控协议
-#对TTL监控模块生效
-# tcp 模式
-# udp 模式
-# ''  表示所有协议
-mont_protocol = "tcp"
+** 监控协议 **
+对TTL监控模块生效
+tcp 模式
+udp 模式
+''  表示所有协议
+> mont_protocol = "tcp"
 
-###锁定连接数,该项能确定监控的敏感度
-# 建议：100000
-no_ttl_connections = 100000
+** 锁定连接数,该项能确定监控的敏感度 **
+建议：100000
+> no_ttl_connections = 100000
 
-###ttl封锁时间
-#支持1d/1h/1m格式
-block_period_ttl = "1m"
-```
+** ttl封锁时间 **
+支持1d/1h/1m格式
+> block_period_ttl = "1m"
+
 
