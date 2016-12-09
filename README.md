@@ -56,51 +56,51 @@ tar zxvf env.tar.gz /usr/local/Dshield/
 
 ## 使用帮助
 
-** 修改配置文件 **
+**修改配置文件**
 
 打开 /usr/local/Dshield/conf/default.ini
 
 
-** 白名单列表 **
+**白名单列表**
 
 支持CIRD格式 
 > whitelisted_ips = "10.10.10.0/24,172.16.0.0/16"
 > whitel_ttl_ips = "10.10.10.0/24,172.16.0.0/16"
 
-** 监控接口 **
+**监控接口**
 > mont_interface = "eth0"
 
-** 监控端口 **
+**监控端口**
 mont_port = "80,22"
 
-** 监听模式 **
+**监听模式**
 false 表示主动防御
 true  表示只作记录不会锁IP,ttl
 > mont_listen = false
 
-** 监控密度,单位为秒 **
+**监控密度,单位为秒**
 > rexec_time = 5
 
-** 锁定连接数,该项能确定监控的敏感度 **
+**锁定连接数,该项能确定监控的敏感度**
 建议：100
 > no_of_connections = 100
 
-** ip封锁时间 **
+**ip封锁时间**
 支持1d/1h/1m格式
 > block_period_ip = "1m"
 
-** 监控协议 **
+**监控协议**
 对TTL监控模块生效
 tcp 模式
 udp 模式
 ''  表示所有协议
 > mont_protocol = "tcp"
 
-** 锁定连接数,该项能确定监控的敏感度 **
+**锁定连接数,该项能确定监控的敏感度**
 建议：100000
 > no_ttl_connections = 100000
 
-** ttl封锁时间 **
+**ttl封锁时间**
 支持1d/1h/1m格式
 > block_period_ttl = "1m"
 
