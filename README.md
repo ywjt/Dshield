@@ -42,10 +42,11 @@ yum install grafana
 ```shell
 wget https://github.com/ywjt/Dshield/archive/master.zip
 unzip Dshield-master.zip
-mv Dshield-master/src /usr/local/Dshield
+cd Dshield-master/
+mv src /usr/local/Dshield
 mv grafana.db /var/lib/grafana/
 service grafana-server start
-tar zxvf env.tar.gz /usr/local/Dshield/
+tar zxvf env.tar.gz -C /usr/local/Dshield/
 ```
 注：env.tar.gz 是打包好的运行环境，要求你本机使用python2.6 Centos系统。
 安装完成，现在可以启动Dshield工具！
