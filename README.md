@@ -67,6 +67,7 @@ tar zxvf env.tar.gz /usr/local/Dshield/
 
 支持CIRD格式 
 > whitelisted_ips = "10.10.10.0/24,172.16.0.0/16"
+
 > whitel_ttl_ips = "10.10.10.0/24,172.16.0.0/16"
 
 **监控接口**
