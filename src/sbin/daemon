@@ -1,0 +1,177 @@
+#!/usr/bin/env python
+# encoding=utf-8
+
+"""
+* @ Dshield for Python
+##############################################################################
+# Author: YWJT / Sunshine Koo                                                #
+# Modify: 2016-12-08                                                         #
+##############################################################################
+# This program is distributed under the "Artistic License" Agreement         #
+# The LICENSE file is located in the same directory as this program. Please  #
+# read the LICENSE file before you make copies or distribute this program    #
+##############################################################################
+"""
+
+import sys
+sys.path.append("..")
+import os, time, atexit, datetime
+from signal import SIGTERM
+from lib import Dshield
+from lib.dUtil import CC
+from lib.dSniff import Sniff
+from lib.dLog import save_log
+
+
+PROC_DIR =  os.path.abspath('..')
+LOGS_DIR = PROC_DIR + '/logs/'
+if not PROC_DIR in os.environ['PATH']:
+	os.environ['PATH'] = os.getenv('PATH') + ':' + PROC_DIR + '/sbin'
+
+class Daemon:
+	"""
+	daemon class.	
+	Usage: subclass the Daemon class and override the _run() method
+	"""
+	def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+		self.stdin = stdin
+		self.stdout = stdout
+		self.stderr = stderr
+		self.pidfile = LOGS_DIR + pidfile
+	
+	def _daemonize(self):
+		#脱离父进程
+		try: 
+			pid = os.fork() 
+			if pid > 0:
+				sys.exit(0) 
+		except OSError, e: 
+			sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno, e.strerror))
+			save_log('DAEM',"Dshield daemon fork #1 failed:"+str(e.strerror)+"\n")
+			sys.exit(1)
+		os.setsid() 
+		os.chdir("/") 
+		os.umask(0)
+	
+		#第二次fork，禁止进程重新打开控制终端
+		try: 
+			pid = os.fork() 
+			if pid > 0:
+				sys.exit(0) 
+		except OSError, e: 
+			sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
+			save_log('DAEM',"Dshield daemon fork #2 failed:"+str(e.strerror)+"\n")
+			sys.exit(1) 
+
+		sys.stdout.flush()
+		sys.stderr.flush()
+		si = file(self.stdin, 'r')
+		so = file(self.stdout, 'a+')
+		se = file(self.stderr, 'a+', 0) 
+		os.dup2(si.fileno(), sys.stdin.fileno())
+		os.dup2(so.fileno(), sys.stdout.fileno())
+		os.dup2(se.fileno(), sys.stderr.fileno())
+		atexit.register(self.delpid)
+		pid = str(os.getpid())
+		file(self.pidfile,'w+').write("%s\n" % pid)
+	
+	def delpid(self):
+		os.remove(self.pidfile)
+
+	def start(self):
+		"""
+		Start the daemon
+		"""
+		try:
+			pf = file(self.pidfile,'r')
+			pid = int(pf.read().strip())
+			pf.close()
+		except IOError,e:
+			pid = None
+	
+		if pid:
+			message = "Start error,pidfile %s already exist. Dshield daemon already running?\n"
+			save_log('DAEM',message+"\n")
+			sys.stderr.write(message % self.pidfile)
+			sys.exit(1)
+
+		self._daemonize()
+		self._run()
+
+	def stop(self):
+		"""
+		Stop the daemon
+		"""
+		try:
+			pf = file(self.pidfile,'r')
+			pid = int(pf.read().strip())
+			pf.close()
+		except IOError:
+			pid = None
+	
+		if not pid:
+			message = "pidfile %s does not exist. Dshield daemon not running?\n"
+			sys.stderr.write(message % self.pidfile)
+			return
+
+		try:
+			while 1:
+				os.kill(pid, SIGTERM)
+				time.sleep(0.1)
+		except OSError, err:
+			err = str(err)
+			if err.find("No such process") > 0:
+				if os.path.exists(self.pidfile):
+					os.remove(self.pidfile)
+					save_log('DAEM',"stop Dshield daemon Success.\n")
+			else:
+				save_log('DAEM',"stop error,"+str(err)+"\n")
+				sys.exit(1)
+
+	def restart(self):
+		self.stop()
+		self.start()
+
+
+class d(Daemon):
+	def _run(self):
+		save_log('-->','Dshield CC daemon started with pid %d' % os.getpid())
+		save_log('-->','Dshield CC daemon started with %s' % datetime.datetime.now().strftime("%m/%d/%Y %H:%M"))
+		CC().run()
+
+class s(Daemon):
+	def _run(self):
+		save_log('-->','Dshield Sniff daemon started with pid %d' % os.getpid())
+		save_log('-->','Dshield Sniff daemon started with %s' % datetime.datetime.now().strftime("%m/%d/%Y %H:%M"))
+		Sniff().run()
+
+def info():
+	save_log('-->','Dshield %s For Python' % Dshield().avr['version'])
+	save_log('-->','Copyright (C) 2016,YWJT.org.')
+
+def init():
+	if 'cc' == (sys.argv[1]).lower():
+		return d("ddos.pid")
+	elif 'sniff' == (sys.argv[1]).lower():
+		return s("sniff.pid")
+	else:
+		print "Unknow Command!"
+		print "Usage: %s {cc|sniff} {start|stop|restart}" % sys.argv[0]
+		sys.exit(1)
+
+if __name__ == '__main__':
+	if len(sys.argv) > 2:
+		if 'START' == (sys.argv[2]).upper():
+			info()
+			init().start()
+		elif 'STOP' == (sys.argv[2]).upper():
+			init().stop()
+		elif 'RESTART' == (sys.argv[2]).upper():
+			init().restart()
+		else:
+			print "Unknow Command!"
+			print "Usage: %s {cc|sniff} {start|stop|restart}" % sys.argv[0]
+			sys.exit(1)
+	else:
+		print "Usage: %s {cc|sniff} {start|stop|restart}" % sys.argv[0]
+		sys.exit(0)

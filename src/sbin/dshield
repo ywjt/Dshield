@@ -1,0 +1,144 @@
+#!/bin/bash
+#
+# @ Dshield for Python
+##############################################################################
+# Author: YWJT / Sunshine Koo                                                #
+# Modify: 2016-12-08                                                         #
+##############################################################################
+# This program is distributed under the "Artistic License" Agreement         #
+# The LICENSE file is located in the same directory as this program. Please  #
+# read the LICENSE file before you make copies or distribute this program    #
+##############################################################################
+#
+
+
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script, use sudo sh $0"
+    exit 1
+fi
+
+SHELL_DIR=$(cd "$(dirname "$0")"; pwd)
+BASEDIR=$(dirname $SHELL_DIR)
+if [ `cat ~/.bash_profile|grep 'ddos'|wc -l` -eq 0 ];then
+    echo "PATH="$PATH:$SHELL_DIR >> ~/.bash_profile
+    echo "export PATH" >> ~/.bash_profile
+    export PATH=$PATH:$SHELL_DIR
+fi
+
+#Env
+ENV_BIN=${BASEDIR}"/env/bin/python"
+
+cd $SHELL_DIR
+function header()
+{
+	echo "Dshield v4.0.0 For Python"
+	echo "Copyright (C)2016,YWJT.org."
+}
+
+function chk_iptables() {
+    /sbin/service iptables status 1>/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        /etc/init.d/iptables start
+    fi
+}
+
+#优化网卡软中断
+function option_irq() {
+  if [ ! -f /var/log/irq_tmp ]
+  then
+      if [ ! -z ${MONT_INTERFACE} ]
+      then
+          /etc/init.d/irqbalance stop 1>/dev/null 2>&1
+          IrqID=$(cat /proc/interrupts |grep ${MONT_INTERFACE}|awk -F ':' '{print $1}'|xargs)
+          Nx=0
+          for Cid in ${IrqID}
+          do
+              Mex=$(echo $((2**${Nx})))
+              Hex=$(printf "%x" ${Mex})
+              echo ${Hex} > /proc/irq/${Cid}/smp_affinity
+              Nx=$((${Nx}+1))
+          done
+          echo 1 >> /var/log/irq_tmp
+      fi
+  fi
+}
+
+function do_start() {
+    chk_iptables 1>/dev/null
+    option_irq 1>/dev/null
+    if [ "$1" == "all" ]
+    then
+        if ./inflctrl start
+        then
+            echo -n "Starting Dshield cc sniff daemon ... "
+            sleep 8
+            $ENV_BIN daemon cc start
+            $ENV_BIN daemon sniff start
+            echo "[ OK ]"
+        fi
+    else
+        echo -n "Starting Dshield $1 daemon ... "
+        nice -n -4 $ENV_BIN daemon $1 start
+        echo "[ OK ]"
+    fi
+}
+
+function do_stop() {
+    if [ "$1" == "all" ]
+    then
+        if ./inflctrl stop
+        then
+            echo -n "Stopping Dshield cc sniff daemon ... "
+            $ENV_BIN daemon cc stop
+            $ENV_BIN daemon sniff stop
+            echo "[ OK ]"
+        fi
+    else
+        echo -n "Stopping Dshield $1 daemon ... "
+        $ENV_BIN daemon $1 stop
+        echo "[ OK ]"
+    fi
+}
+
+function do_restart() {
+    if [ "$1" == "all" ]
+    then
+        if ./inflctrl restart
+        then
+            echo -n "Restarting Dshield cc sniff daemon ... "
+            $ENV_BIN daemon cc restart
+            $ENV_BIN daemon sniff restart
+            echo "[ OK ]"
+        fi
+    else
+        echo -n "Restarting Dshield $1 daemon ... "
+        $ENV_BIN daemon $1 restart
+        echo "[ OK ]"
+    fi
+}
+
+
+if [[ "$1" != "cc" && "$1" != "sniff" && "$1" != "influx" && "$1" != "all" ]]
+then
+    echo "Usage: $0 {influx|cc|sniff|all} {start|stop|restart}"
+    exit 1
+else
+    proc=$1
+fi
+
+case "$2" in
+  start)
+        do_start $proc
+        ;;
+  stop)
+        do_stop $proc
+        ;;
+  restart)
+        do_restart $proc
+        ;;	
+  *)
+        echo "Usage: $0 {cc|sniff}  {start|stop|restart}"
+        exit 1
+esac
+
