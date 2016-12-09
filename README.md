@@ -5,7 +5,7 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 本工具经过了4次更新，原名叫“DDoS-Defender”，本版本V4.0.0中新增了基于web可视化的图形界面,代码层基本上全部进行了重构。由于面向web可视化，所以底层架构上采用了influxDB + grafana的结合，你可以不需要安装任何额外的http服务来支持它的运行，因为grafana工具已集成了一套http服务，且图形是可自定义配置的。使用起来相当容易。保证你会喜欢上它！
 
 ### 程序结构
-* Dshield/conf     配置文件目录
+* Dshield/conf     配置文件
 * Dshield/data     存放数据缓存
 * Dshield/lib      功能模块实例
 * Dshield/sbin     主程序
