@@ -54,6 +54,8 @@ tar zxvf env.tar.gz /usr/local/Dshield/
 ```
 赶紧打开 http://{your_ip}:3000/ 看看。
 
+<img src="https://github.com/ywjt/Dshield/blob/master/demo.png">
+
 ## 使用帮助
 
 **修改配置文件**
