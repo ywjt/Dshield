@@ -54,6 +54,7 @@ tar zxvf env.tar.gz -C /usr/local/Dshield/
 /usr/local/Dshield/sbin/dshield all start
 ```
 赶紧打开 http://{your_ip}:3000/ 看看。
+
 用户名/密码：admin /admin 
 
 <img src="https://github.com/ywjt/Dshield/blob/master/demo.png">
