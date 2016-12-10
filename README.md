@@ -14,7 +14,7 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 
 ##  安装 Installation
 
-使用root用户来进行安装(要求你本机使用python2.6 Centos系统):
+使用root用户来进行安装(<del>要求你本机使用python2.6 Centos系统</del>):
 
 (1)安装grafana
 ```shell
@@ -43,14 +43,12 @@ yum install grafana
 wget https://github.com/ywjt/Dshield/archive/master.zip
 unzip Dshield-master.zip
 cd Dshield-master/
-mv src /usr/local/Dshield
-mv grafana.db /var/lib/grafana/
-service grafana-server start
-tar zxvf env.tar.gz -C /usr/local/Dshield/
+sh install.sh
 ```
-注：env.tar.gz 是打包好的运行环境，要求你本机使用python2.6 Centos系统。
+
 安装完成，现在可以启动Dshield工具！
 ```shell
+service grafana-server restart
 /usr/local/Dshield/sbin/dshield all start
 ```
 赶紧打开 http://{your_ip}:3000/ 看看。
