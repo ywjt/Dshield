@@ -27,7 +27,7 @@ if [ `cat ~/.bash_profile|grep 'ddos'|wc -l` -eq 0 ];then
 fi
 
 #Env
-ENV_BIN=${BASEDIR}"/env/bin/python"
+ENV_BIN="/usr/bin/python"
 
 cd $SHELL_DIR
 function header()
