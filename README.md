@@ -14,7 +14,7 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 
 ##  安装 Installation
 
-使用root用户来进行安装:
+使用root用户来进行安装(要求你本机使用python2.6 Centos系统):
 
 (1)安装grafana
 ```shell
