@@ -20,7 +20,7 @@ fi
 
 SHELL_DIR=$(cd "$(dirname "$0")"; pwd)
 BASEDIR=$(dirname $SHELL_DIR)
-if [ `cat ~/.bash_profile|grep 'ddos'|wc -l` -eq 0 ];then
+if [ `cat ~/.bash_profile|grep 'Dshield'|wc -l` -eq 0 ];then
     echo "PATH="$PATH:$SHELL_DIR >> ~/.bash_profile
     echo "export PATH" >> ~/.bash_profile
     export PATH=$PATH:$SHELL_DIR
