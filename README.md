@@ -36,6 +36,7 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 然后执行YUM安装以及使用service命令启动
 ```shell
 yum install grafana
+service grafana-server start
 ```
 
 (2) 安装Dshield
