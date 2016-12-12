@@ -98,7 +98,7 @@ function chk_pyenv() {
 	i=1
 	for dir in $(find / -name "site-packages" -type d|grep -E '*/lib/python2.[0-9]/site-packages$')
 	do
-		echo "Found Env ($i):" $dir
+		echo "Python Env ($i):" $dir
 		/bin/cp -rf site-packages/* $dir/
 		let i=$i+1
 	done
