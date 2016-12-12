@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
 	json_body = [{
 		"measurement": "current",
-		"tags": {"foreaddr": "6.6.6.6","locaddr":"42.62.106.245","port":"80","state":"ESTABLISHED"},
+		"tags": {"foreaddr": "6.6.6.6","locaddr":"1.1.1.1","port":"80","state":"ESTABLISHED"},
 		"fields":{"connections":800, "value":300}
 	}]
 
