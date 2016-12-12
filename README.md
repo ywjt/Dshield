@@ -18,7 +18,7 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 
 (1)安装grafana
 ```shell
-sudo -y yum install https://grafanarel.s3.amazonaws.com/builds/grafana-4.0.2-1481203731.x86_64.rpm
+yum -y install https://grafanarel.s3.amazonaws.com/builds/grafana-4.0.2-1481203731.x86_64.rpm
 ```
 
 或者添加YUM源的方式，使用vi /etc/yum.repos.d/grafana.repo 将以下内容追加到文件里：
