@@ -65,7 +65,7 @@ function option_irq() {
 
 function chk_iptables() {
 	echo "| Check iptables env ... "
-	if ! rpm -qa iptables 1>/dev/null 2>&1
+	if ! rpm -qa iptables|grep 'iptables' >/dev/null
 	then
 		yum -y install iptables
 	else
@@ -106,7 +106,7 @@ function chk_pyenv() {
 
 function grafana_init() {
 	echo "| Install grafana ..."
-	if ! rpm -qa grafana 1>/dev/null 2>&1
+	if ! rpm -qa grafana|grep 'grafana' >/dev/null
 	then
 		yum -y install https://grafanarel.s3.amazonaws.com/builds/grafana-4.0.2-1481203731.x86_64.rpm
 	fi
