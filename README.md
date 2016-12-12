@@ -41,7 +41,7 @@ yum install grafana
 (2) 安装Dshield
 ```shell
 wget https://github.com/ywjt/Dshield/archive/master.zip
-unzip Dshield-master.zip
+unzip master.zip
 cd Dshield-master/
 sh install.sh
 ```
