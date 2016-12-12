@@ -110,6 +110,7 @@ function grafana_init() {
 	then
 		yum -y install https://grafanarel.s3.amazonaws.com/builds/grafana-4.0.2-1481203731.x86_64.rpm
 	fi
+	service grafana-server start
 }
 
 
