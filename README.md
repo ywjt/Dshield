@@ -59,6 +59,13 @@ service grafana-server restart
 
 ## 使用帮助
 
+**命令使用**
+
+/usr/local/Dshield/sbin/dshield all {start|stop|restart}    #启动全部服务
+/usr/local/Dshield/sbin/dshield cc {start|stop|restart}     #启动主进程
+/usr/local/Dshield/sbin/dshield sniff {start|stop|restart}  #启动ttl模块
+/usr/local/Dshield/sbin/inflctl {start|stop|restart}        #独立启动数据缓存
+
 **修改配置文件**
 
 打开 /usr/local/Dshield/conf/default.ini
