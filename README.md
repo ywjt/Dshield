@@ -75,7 +75,7 @@ service grafana-server restart
 > mont_interface = "eth0"
 
 **监控端口**
-mont_port = "80,22"
+> mont_port = "80,22"
 
 **监听模式**
 false 表示主动防御
