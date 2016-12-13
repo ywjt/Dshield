@@ -126,6 +126,8 @@ function dshield_init() {
 	/bin/cp -rf src /usr/local/Dshield
 	[ -f /var/lib/grafana/grafana.db ] && mv /var/lib/grafana/grafana.db /var/lib/grafana/grafana.db_
 	/bin/cp -f grafana.db /var/lib/grafana/
+	chown grafana:grafana /var/lib/grafana/grafana.db
+	chmod 775 /var/lib/grafana/grafana.db
 	chk_pyenv
 	chown root:root /usr/local/Dshield
 	chmod 775 -R /usr/local/Dshield
