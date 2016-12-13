@@ -42,7 +42,7 @@ class CC(Dshield):
         s['port'] = ""
         ss['bin'] = "/usr/sbin/ss"
         ss['option'] = "-4tn"
-        ss['state'] = "state established state fin-wait-1 state syn-recv"
+        ss['state'] = "state established state fin-wait-1 state syn-sent state syn-recv"
         ss['column1'] = "awk -F'[ :]*' '{if (NR>1) a[$6]++}END{for(i in a){print a[i],i,$4,$5}}'"
         ss['column2'] = "awk -F'[ :]*' '{if (NR>1){a[$6\" \"$1]++}}END{for(i in a){print a[i],$4,$5,i}}'"
         for wip in self.avr['whitelistIPs'].split(","):
