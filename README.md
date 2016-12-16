@@ -75,7 +75,7 @@ password: admin
 
 **modified configure file**
 
-打开 /usr/local/Dshield/conf/default.ini
+Open File: /usr/local/Dshield/conf/default.ini
 
 
 **white list**
