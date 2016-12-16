@@ -67,10 +67,10 @@ password: admin
 
 **command usage**
 ```shell
-# /usr/local/Dshield/sbin/dshield all {start|stop|restart}    #启动全部服务
-# /usr/local/Dshield/sbin/dshield cc {start|stop|restart}     #启动主进程
-# /usr/local/Dshield/sbin/dshield sniff {start|stop|restart}  #启动ttl模块
-# /usr/local/Dshield/sbin/inflctl {start|stop|restart}        #独立启动数据缓存
+# /usr/local/Dshield/sbin/dshield all {start|stop|restart}    #Start all service
+# /usr/local/Dshield/sbin/dshield cc {start|stop|restart}     #Start cc process
+# /usr/local/Dshield/sbin/dshield sniff {start|stop|restart}  #Start ttl modle
+# /usr/local/Dshield/sbin/inflctl {start|stop|restart}        #Only start InfluxDB process
 ```
 
 **modified configure file**
