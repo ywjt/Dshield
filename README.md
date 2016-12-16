@@ -8,25 +8,24 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 
 本工具经过了4次更新，原名叫“DDoS-Defender”，本版本V4.0.0中新增了基于web可视化的图形界面,代码层基本上全部进行了重构。由于面向web可视化，所以底层架构上采用了influxDB + grafana的结合，你可以不需要安装任何额外的http服务来支持它的运行，因为grafana工具已集成了一套http服务，且图形是可自定义配置的。使用起来相当容易。保证你会喜欢上它！
 
-## 程序结构 [Constructure]
-* Dshield/conf     配置文件
-* Dshield/data     存放数据缓存
-* Dshield/lib      功能模块实例
-* Dshield/sbin     主程序
-* Dshield/logs     日志输出记录
-* Dshield/test     测试用例
+## Constructure
+* Dshield/conf     Configure files
+* Dshield/data     Data buffer storage
+* Dshield/lib      Library of modules
+* Dshield/sbin     Main program
+* Dshield/logs     Logs directory
+* Dshield/test     Test cases
 
-## 安装 [Installation]
+## Installation
 
-使用root用户来进行安装(<del>要求你本机使用python2.6 Centos系统</del>):
+Install Dshield with root user:
 
-(1)安装grafana
+(1) Install grafana
 ```shell
 yum -y install https://grafanarel.s3.amazonaws.com/builds/grafana-4.0.2-1481203731.x86_64.rpm
 service grafana-server start
 ```
-
-或者添加YUM源的方式，使用vi /etc/yum.repos.d/grafana.repo 将以下内容追加到文件里：
+or install it by adding yum source, vi /etc/yum.repos.d/grafana.repo and add the content below.
 ```shell
 [grafana]
 name=grafana
@@ -38,13 +37,14 @@ gpgkey=https://packagecloud.io/gpg.key https://grafanarel.s3.amazonaws.com/RPM-G
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
-然后执行YUM安装以及使用service命令启动
+
+Then install it by yum and start grafana-server by service command.
 ```shell
 yum install grafana
 service grafana-server start
 ```
 
-(2) 安装Dshield
+(2) Install Dshield
 ```shell
 wget https://github.com/ywjt/Dshield/archive/master.zip
 unzip master.zip
@@ -52,20 +52,20 @@ cd Dshield-master/
 sh install.sh
 ```
 
-安装完成，现在可以启动Dshield工具！
+Installation finished and you can start it now!
 ```shell
 service grafana-server restart
 /usr/local/Dshield/sbin/dshield all start
 ```
-赶紧打开 http://{your_ip}:3000/ 看看。
-
-用户名/密码：admin /admin 
+Now you can log in the administration backend by URL http://{your_ip}:3000
+username: admin
+password: admin
 
 <img src="https://github.com/ywjt/Dshield/blob/master/demo.png">
 
-## 使用帮助 [Help]
+## Help
 
-**命令使用 command usage**
+**command usage**
 ```shell
 # /usr/local/Dshield/sbin/dshield all {start|stop|restart}    #启动全部服务
 # /usr/local/Dshield/sbin/dshield cc {start|stop|restart}     #启动主进程
@@ -73,56 +73,51 @@ service grafana-server restart
 # /usr/local/Dshield/sbin/inflctl {start|stop|restart}        #独立启动数据缓存
 ```
 
-**修改配置文件 modified configure file**
+**modified configure file**
 
 打开 /usr/local/Dshield/conf/default.ini
 
 
-**白名单列表**
+**white list**
 
-支持CIRD格式 
+support CIRD format
 > whitelisted_ips = "10.10.10.0/24,172.16.0.0/16"
 
 > whitel_ttl_ips = "10.10.10.0/24,172.16.0.0/16"
 
-**监控接口**
+**monitor interface**
 > mont_interface = "eth0"
 
-**监控端口**
+**monitor port**
 > mont_port = "80,22"
 
-**监听模式**
-false 表示主动防御
-true  表示只作记录不会锁IP,ttl
+**listen mode**
+false means active defense, true means only record IP and ttl but not block
 > mont_listen = false
 
-**监控密度,单位为秒**
+**monitor interval**
+specified in seconds
 > rexec_time = 5
 
-**锁定连接数,该项能确定监控的敏感度**
-建议：100
+**block connections**
+this parameter can assign the sensitivity of monitoring, 100 is recommanded
 > no_of_connections = 100
 
-**ip封锁时间**
-支持1d/1h/1m格式
+**ip block time**
+support 1d/1h/1m format
 > block_period_ip = "1m"
 
-**监控协议**
-对TTL监控模块生效
-tcp 模式
-udp 模式
-''  表示所有协议
+**monitor protocol**
+it is available for TTL monitor module, tcp-tcp only, udp-udp only, ‘’-all protocols are monitored
 > mont_protocol = "tcp"
 
-**锁定连接数,该项能确定监控的敏感度**
-建议：20000~100000
+**block connections**
+this parameter can assign the sensitivity of monitoring, 20000~100000 is recommanded
 > no_ttl_connections = 20000
 
-**ttl封锁时间**
-支持1d/1h/1m格式
+**ttl unblock time**
+surpport 1d/1h/1m format
 > block_period_ttl = "1m"
-
-
 
 
 ## About
