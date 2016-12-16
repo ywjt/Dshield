@@ -60,7 +60,6 @@ service grafana-server restart
 Now you can log in the administration backend by URL http://{your_ip}:3000
 
 username: admin
-
 password: admin
 
 <img src="https://github.com/ywjt/Dshield/blob/master/demo.png">
