@@ -11,7 +11,7 @@ Dshield是一个轻量型的DDos防护工具，它在受到如CC、压测工具�
 ## Constructure
 * Dshield/conf     Configure files
 * Dshield/data     Data buffer storage
-* Dshield/lib      Library of modules
+* Dshield/lib       Library of modules
 * Dshield/sbin     Main program
 * Dshield/logs     Logs directory
 * Dshield/test     Test cases
