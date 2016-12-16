@@ -111,8 +111,8 @@ udp 模式
 > mont_protocol = "tcp"
 
 **锁定连接数,该项能确定监控的敏感度**
-建议：100000
-> no_ttl_connections = 100000
+建议：20000~100000
+> no_ttl_connections = 20000
 
 **ttl封锁时间**
 支持1d/1h/1m格式
