@@ -127,4 +127,4 @@ udp 模式
 
 **Maintainer:** Sunshine Koo <350311204@qq.com>
 
-<img src="http://www.ywjt.org/ywjtshare.png">
+<img src="http://www.ywjt.org/ywjtshare.png" width="200px">
