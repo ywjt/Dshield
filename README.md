@@ -119,3 +119,10 @@ udp 模式
 > block_period_ttl = "1m"
 
 
+## About
+
+**Original Author:** YWJT http://www.ywjt.org/ (Copyright (C) 2016)
+
+**Maintainer:** Sunshine Koo <350311204@qq.com>
+
+<img src="http://www.ywjt.org/ywjtshare.png">
